@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CSV Editor</title>
+        <link rel="stylesheet" type="text/css" href="./style.css">
+        <link href="tagify.css" rel="./node_modules\@yaireo\tagify\src\tagify.scss">
+        <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Work Sans:wght@500&display=swap"
+        />
+        <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap"
+        />
+    </head>
+    <body>
+        <div class="cover">
+            <img class="cover-child" alt="" src="./resources/f5aba111301475.560f58821d58b.jpg" />
+            
+      
+            <div class="header">
+              <div class="csv-editor">CSV Editor</div>
+              <div class="logo"></div>
+              <div class="main-parent">
+                <div class="main">Main</div>
+                <div class="main">About</div>
+                <div class="main">Help</div>
+                <div class="contact-us">Contact Us</div>
+              </div>
+            </div>
+            <div class="clean-your-csv">Clean Your CSV</div>
+            <div class="tags-wrapper" id="frameContainer1">
+              <div class="tags1">
+                <button class="tag5">
+                  <input class="upload-csv-button" type="file" accept=".csv" id="csvFileInput">
+                  <div class="dropZoneOverlay"> Upload .csv</div>
+                </button>
+                <button class="tag5" id="btnshowTransform">
+                  <div class="upload-csv" type="button" class="button">Show Tools</div>
+                </button>
+                <button class="tag5" id="btnExportToCsv">
+                  <div class="upload-csv" type="button" class="button">Export .csv</div>
+                </button>
+              </div>
+            </div>
+
+            <hr class="rounded"> 
+            <div id="tags-parent" data-animate-on-scroll>
+                <div class="tags">
+                  <div class="tag">
+                    <div class="filter">Clean</div>
+                  </div>
+                  <div class="tag">
+                    <div class="filter">Compare</div>
+                  </div>
+                  <div class="tag">
+                    <div class="filter" id="splitmergebutton">Split/Merge</div>
+                  </div>
+                  <div class="tag">
+                    <div class="filter" id="filterbutton" >Filter Keywords</div>
+                  </div>
+                  <div class="tag">
+                    <div class="filter">Rearrange (Pivot)</div>
+                  </div>
+                </div>
+              </div>
+              <div id="filterbox">
+                <div id="step1filter">
+                    <div id="smallCrush">
+                    <h3>Step 1: Choose Affected Columns</h3>
+                    </div>
+                    <input name='tags-filter-columns' placeholder='List Columns Here...'>
+                </div>
+                <div id="step2filter">
+                    <div id="smallCrush">
+                        <h3>Step 2: Choose Keywords</h3>
+                    </div>
+                    <input name='tags-normal' placeholder='List Keywords Here...'>
+                </div>
+                <div id="step3filter">
+                    <h3>Step 3: Choose Settings</h3>
+                    <div>
+                        <label id="filterdonotswitchparent">
+                        Filter Out Rows That<b> Do Not </b>Contain Keywords in Selected Columns
+                        </label>
+                        <label class="switch">
+                            <input type="checkbox" id="filterdonotswitch">
+                            <span class="slider round"></span>
+                        </label> 
+                    </div>
+                    <div>
+                        <label>
+                        Match Keywords Exactly (ex. for keyword "truck", "firetruck" would be unaffected)
+                        </label>
+                        <label class="switch">
+                            <input type="checkbox" id="matchkeywordsswitch">
+                            <span class="slider round"></span>
+                        </label> 
+                    </div>
+                </div>
+                <button class="confirm-style" id="confirmButtonFilter">
+                    <div class="confirm-button" type="button" class="button">Confirm</div>
+                </button>
+            </div>
+            <div id="splitmergebox">
+                <div id="step1split">
+                    <h3>Step 1: Choose Reformat Style</h3> 
+                    <select name="language" id="language">
+                        <option></option>
+                        <option id="splitop">Split Columns by Characters</option>
+                        <option id="mergeop">Merge Columns by Characters</option>
+                    </select>
+                </div>
+                <div id="step2split">
+                    <div id="smallCrush">
+                        <h3>Step 2: Choose Affected Columns</h3> 
+                        <div id="inorder">(In Order)</div>
+                    </div>
+                    <input name='tags-split-columns' placeholder='List Keywords Here...'>
+                </div>
+                <div id="step3split">
+                    <div id="smallCrush">
+                        <h3>Step 3: Choose Characters</h3> 
+                    </div>
+                    <textarea id="splitmergecharacter"></textarea>
+                </div>
+                <button class="confirm-style" id="confirmButtonSplit">
+                    <div class="confirm-button" type="button" class="button">Confirm</div>
+                </button>
+                <div class="confirm-error"></div>
+            </div>
+            
+            <hr class="rounded2"> 
+            <div id="tableContainer">
+              <table id="csvRoot"></table>
+            </div>
+            <hr class="rounded2"> 
+            
+          </div>
+
+      
+        
+          
+
+
+        <script>
+            var popuptagContainer1 = document.getElementById("popuptagContainer1");
+            if (popuptagContainer1) {
+              popuptagContainer1.addEventListener("click", function (e) {
+                window.location.href = "/";
+              });
+            }
+            var scrollAnimElements = document.querySelectorAll("[data-animate-on-scroll]");
+            var observer = new IntersectionObserver(
+              (entries) => {
+                for (const entry of entries) {
+                  if (entry.isIntersecting || entry.intersectionRatio > 0) {
+                    const targetElement = entry.target;
+                    targetElement.classList.add("animate");
+                    observer.unobserve(targetElement);
+                  }
+                }
+              },
+              {
+                threshold: 0.15,
+              }
+            );
+            
+            for (let i = 0; i < scrollAnimElements.length; i++) {
+              observer.observe(scrollAnimElements[i]);
+            }
+            
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/papaparse@5.2.0/papaparse.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+        <script type="module" src="./js/main.js" ></script>
+    </body>
+</html>
+
+<!-- have a javascript class that wraps (takes in) the table element and will modify the underlying table -->
+
+<!-- The <script> tag is used to embed a client-side script (JavaScript). For us, this is papaparse and the main.js
+
+    notice though we put type=module for main.js. This way we can import TableCsv class from main.js
+-->
+
+
+<!-- 
+
+Attribute 	    Value 	                        Description
+
+async 	        async 	                        Specifies that the script is downloaded in parallel to parsing the page, and executed as soon as it is available (before parsing completes) (only for external scripts)
+crossorigin 	anonymous
+                use-credentials 	            Sets the mode of the request to an HTTP CORS Request
+defer 	        defer 	                        Specifies that the script is downloaded in parallel to parsing the page, and executed after the page has finished parsing (only for external scripts)
+integrity 	    filehash 	                    Allows a browser to check the fetched script to ensure that the code is never loaded if the source has been manipulated
+nomodule 	    True
+                False 	                        Specifies that the script should not be executed in browsers supporting ES2015 modules
+referrerpolicy 	no-referrer
+                no-referrer-when-downgrade
+                origin
+                origin-when-cross-origin
+                same-origin
+                strict-origin
+                strict-origin-when-cross-origin
+                unsafe-url 	                    Specifies which referrer information to send when fetching a script
+
+src 	        URL 	                        Specifies the URL of an external script file
+type 	        scripttype                  	Specifies the media type of the script -->
+

@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@yaireo/tagify": "^4.17.8",
+    "papaparse": "^5.4.1"
+  }
+}
